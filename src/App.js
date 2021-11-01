@@ -1,23 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Form from './components/Form'
+import Cards from './components/Cards'
 
 function App() {
+  const [search, setSearch] = useState("")
+  const [hero, setHero] = useState(null)
+
+  const searching = ({value}) =>{
+    setSearch(value)
+  }
+
+  const requestApi = async (e) =>{
+    e.preventDefault()
+    const token = '5240519915974601'
+    const urlDir = `https://www.superheroapi.com/api.php/${token}/search/${search}`
+    const response = await fetch(urlDir)
+    const result = await response.json()
+    setHero(result.results)
+  }
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+        <Form
+          handlerSearch={searching}
+          handlerSubmit={requestApi}
+        />
+      }
+      {
+        hero && hero.length > 0 ?
+        hero.map(superHero => (
+          <Cards
+            key={superHero.id}
+            name={superHero.name}
+            image={superHero.image.url}
+          />
+        )):<h4>Nothing was found</h4>
+      }
     </div>
   );
 }

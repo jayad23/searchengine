@@ -1,0 +1,18 @@
+form{
+    margin: 40px;
+    padding: 10px;
+}
+
+input[type='text']{
+    padding: 10px;
+    width: 250px;
+    border-radius: 5px 0 0 5px;
+    font-size: 18px;
+}
+
+input[type='submit']{
+    padding: 10px;
+    border-radius: 0 5px 5px 0;
+    background-color: chartreuse;
+    font-size: 18px;
+}
